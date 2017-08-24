@@ -30,7 +30,7 @@ class BufferedRandomAccessFile implements InputStream, OutputStream{
 	private $toppingPointer = 0;
 
 	public function __construct(string $file, int $bufferExp = 12){
-		$this->stream = fopen($file, "w+b");
+		$this->stream = fopen($file, "c+b");
 		$this->bufferSize = 1 << $bufferExp;
 	}
 
@@ -66,6 +66,7 @@ class BufferedRandomAccessFile implements InputStream, OutputStream{
 	public function flush(){
 		fseek($this->stream, $this->bufferSize * $this->bufferNumber);
 		fwrite($this->stream, $this->buffer);
+		fflush($this->stream);
 	}
 
 	public function close(){
