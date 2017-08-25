@@ -28,4 +28,8 @@ abstract class Reader implements Closeable{
 	public function close(){
 		$this->stream->close();
 	}
+
+	public function read(int $length) : string{
+		return $this->stream->read($length);
+	}
 }

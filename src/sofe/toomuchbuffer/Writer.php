@@ -28,4 +28,8 @@ abstract class Writer implements Closeable{
 	public function close(){
 		$this->stream->close();
 	}
+
+	public function write(string $bytes){
+		$this->stream->write($bytes);
+	}
 }
