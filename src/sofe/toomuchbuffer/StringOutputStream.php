@@ -21,8 +21,8 @@ class StringOutputStream implements OutputStream{
 	/** @var string */
 	private $string;
 
-	public function __construct(string $string){
-		$this->string = $string;
+	public function __construct(string &$string){
+		$this->string =& $string;
 	}
 
 	public function write(string $bytes){
