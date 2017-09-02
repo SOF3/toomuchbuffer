@@ -33,7 +33,11 @@ class StreamInputStream implements InputStream{
 	 * @throws \UnderflowException
 	 */
 	public function read(int $length) : string{
-		return fread($this->resource, $length);
+		$ret = fread($this->resource, $length);
+		if(strlen($ret) !== $length){
+			throw new \UnderflowException("End of stream reached");
+		}
+		return $ret;
 	}
 
 	public function close(){
