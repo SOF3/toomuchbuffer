@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace sofe\toomuchbuffer;
 
-class StringOutputStream implements OutputStream{
+class StringOutputStream implements AmendableOutputStream{
 	/** @var string */
 	private $string;
 
@@ -27,6 +27,13 @@ class StringOutputStream implements OutputStream{
 
 	public function write(string $bytes){
 		$this->string .= $bytes;
+	}
+
+	public function amend(int $startOffset, string $data){
+		if($startOffset + strlen($data) > strlen($this->string)){
+			throw new \OverflowException("Amendment will overflow the current buffer");
+		}
+		$this->string = substr_replace($this->string, $data, $startOffset);
 	}
 
 	public function close(){

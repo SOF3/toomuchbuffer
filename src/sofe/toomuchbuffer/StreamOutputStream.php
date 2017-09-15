@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace sofe\toomuchbuffer;
 
-class StreamOutputStream implements OutputStream{
+class StreamOutputStream implements AmendableOutputStream{
 	/** @var resource */
 	private $resource;
 
@@ -27,6 +27,13 @@ class StreamOutputStream implements OutputStream{
 
 	public function write(string $bytes){
 		fwrite($this->resource, $bytes);
+	}
+
+	public function amend(int $startOffset, string $data){
+		$offset = ftell($this->resource);
+		fseek($this->resource, $startOffset);
+		fwrite($this->resource, $data);
+		fseek($this->resource, $offset);
 	}
 
 	public function close(){
